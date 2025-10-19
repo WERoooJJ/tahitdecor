@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Казахский стиль — Панельные шторы (Blackout + Вуаль)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root{
+      --bg:#faf7f2;        /* общий фон */
+      --ink:#1c1c1c;       /* основной текст */
+      --muted:#5e5a54;     /* вторичный текст */
+      --line:#e9e3da;      /* разделители */
+      --accent:#b68458;    /* тёплый акцент из фото */
+      --accent-2:#cfb593;  /* светлый акцент */
+    }
+    html,body{margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial;}
+    .container{max-width:960px; margin:0 auto; padding:0 20px}
+    header, section{padding:72px 0}
+    h1{font-size:clamp(32px,5vw,56px); line-height:1.05; letter-spacing:-.02em; margin:0}
+    h2{font-size:clamp(22px,3.4vw,32px); letter-spacing:-.01em; margin:0 0 12px}
+    h3{font-size:20px; margin:0 0 8px}
+    p{margin:10px 0 0; color:var(--muted)}
+    .nav{position:fixed; inset:0 0 auto 0; background:rgba(250,247,242,.85); border-bottom:1px solid var(--line); backdrop-filter:saturate(140%) blur(8px);}
+    .nav .inner{display:flex; align-items:center; justify-content:space-between; height:64px}
+    .nav a{color:inherit; text-decoration:none; font-size:14px; opacity:.75}
+    .nav a:hover{opacity:1}
+
+    .hero{display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center}
+    .hero .imgwrap{position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--line)}
+    .hero img{width:100%; height:100%; display:block; object-fit:cover}
+    .dimmer{position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .25s ease}
+    .controls{display:flex; gap:12px; align-items:center; margin-top:18px}
+    .range{width:220px}
+
+    .divider{height:1px; background:var(--line); margin:56px 0}
+
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:28px}
+    .card{border:1px solid var(--line); border-radius:14px; padding:22px; background:#fff}
+
+    .tag{display:inline-block; font-size:12px; padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#fff}
+    .btn{appearance:none; border:1px solid var(--line); background:#fff; border-radius:999px; padding:10px 16px; font-weight:600}
+    .btn--accent{border-color:transparent; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff}
+
+    .legend{display:flex; gap:10px; align-items:center; font-size:12px; color:var(--muted)}
+    .dot{width:10px; height:10px; border-radius:50%; background:var(--accent)}
+
+    footer{border-top:1px solid var(--line); padding:36px 0; color:var(--muted); font-size:12px; text-align:center}
+
+    /* минимальные адаптивные правки */
+    @media (max-width:900px){.hero{grid-template-columns:1fr;}.controls{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container inner">
+      <div style="font-weight:800; letter-spacing:.12em; font-size:12px">KAZAKH ORNAMENT PANELS</div>
+      <div style="display:flex; gap:18px">
+        <a href="#idea">Концепт</a>
+        <a href="#materials">Материалы</a>
+        <a href="#function">Функции</a>
+        <a href="#interactive">Интерактив</a>
+        <a href="#poll">Опрос</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO (одна картинка, минимал) -->
+  <header class="container" id="hero" style="padding-top:96px">
+    <div class="hero">
+      <div>
+        <h1>Панельные шторы в казахском стиле</h1>
+        <p style="margin-top:14px">Тёплая палитра, орнамент «қазақ оюы», сочетание <b>Blackout</b> и <b>Света</b> — спокойный минимализм без лишних деталей.</p>
+        <div class="controls">
+          <span class="tag">Затемнение</span>
+          <input id="lightRange" class="range" type="range" min="0" max="100" value="35" />
+          <span class="legend"><span class="dot"></span> имитация blackout</span>
+        </div>
+        <div class="controls">
+          <button class="btn" data-theme="sand">Песочный</button>
+          <button class="btn" data-theme="linen">Льняной</button>
+          <button class="btn btn--accent" data-theme="brown">Тёплый коричневый</button>
+        </div>
+      </div>
+      <figure class="imgwrap">
+        <img src="./123.png" alt="Панельные шторы с казахским орнаментом">
+        <div class="dimmer" id="dimmer"></div>
+      </figure>
+    </div>
+  </header>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- IDEA -->
+  <section class="container" id="idea">
+    <h2>1. Концепт</h2>
+    <p>Современная система панельных штор с <b>казахским орнаментом</b>. Два типа полотен работают вместе: плотные blackout‑панели для приватности и затемнения, и тонкие полупрозрачные панели для дневного света и мягкого рисунка.</p>
+  </section>
+
+  <section class="container" id="materials">
+    <div class="grid-2">
+      <div class="card">
+        <h3>Плотные полотна</h3>
+        <p>Изготовлены из ткани <b>Blackout жаккард</b> тёплого коричневого оттенка. Материал обладает плотной структурой и полным светонепроницаемым эффектом — при закрытии создаёт в помещении затемнение до <b>95–100%</b>. Поверхность матовая, мягкая на ощупь, устойчива к выгоранию и деформации. Эти панели обеспечивают защиту от солнечного света и визуальную приватность.</p>
+      </div>
+      <div class="card">
+        <h3>Тонкие полотна</h3>
+        <p>Выполнены из <b>льняной вуали</b> или <b>полиэстеровой органзы</b> светло‑бежевого оттенка, немного светлее основного цвета. На ткани нанесён деликатный казахский орнамент, который добавляет декоративный акцент, сохраняя минимализм стиля. Материал лёгкий, полупрозрачный, пропускает естественный свет и создаёт мягкое рассеянное освещение в комнате.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" id="function">
+    <div class="grid-2">
+      <div class="card">
+        <h3>Функциональность</h3>
+        <p>Комбинация плотных и тонких полотен позволяет регулировать уровень освещения и приватности в зависимости от времени суток и настроения. Днём — вуаль для света и орнамента; вечером — blackout для отдыха и тишины.</p>
+      </div>
+      <div class="card">
+        <h3>Нижнее основание (утяжелитель)</h3>
+        <p>В нижней части каждого полотна установлен <b>алюминиевый утяжелительный профиль</b>, скрытый внутри тканевого канала. Он обеспечивает ровное вертикальное натяжение ткани и предотвращает деформацию при движении панелей. Благодаря утяжелителю, шторы остаются идеально прямыми и не колышутся при открывании или закрывании.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" id="interactive">
+    <h2></h2>
+    <p></p>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <section class="container" id="poll">
+    <h2>3. Мини‑опрос</h2>
+    <p>Какой режим вы бы выбрали дома?</p>
+    <div class="grid-2" style="align-items:start; margin-top:12px">
+      <div class="card">
+        <canvas id="prefChart" height="220"></canvas>
+      </div>
+      <form id="voteForm" class="card" style="display:grid; grid-template-columns:1fr; gap:10px">
+        <label><input type="radio" name="mode" value="blackout" checked> Полное затемнение</label>
+        <label><input type="radio" name="mode" value="soft"> Мягкий свет (вуаль)</label>
+        <label><input type="radio" name="mode" value="mix"> Комбинация</label>
+        <label><input type="radio" name="mode" value="daylight"> Максимум дневного света</label>
+        <button class="btn btn--accent" type="submit">Голосовать</button>
+        <small style="color:var(--muted)">Демо: результаты сохраняются в этом браузере.</small>
+      </form>
+    </div>
+  </section>
+
+  <footer></footer>
+
+  <script>
+    // имитация blackout
+    const range=document.getElementById('lightRange');
+    const dimmer=document.getElementById('dimmer');
+    function upd(){dimmer.style.background=`rgba(0,0,0,${(range.value/100)*0.85})`}
+    range.addEventListener('input',upd); upd();
+
+    // смена темы (минимально)
+    const root=document.documentElement;
+    const themes={
+      sand:{bg:'#fbf6ef', ink:'#1c1c1c', accent:'#c8ab86', accent2:'#e0c8a6'},
+      linen:{bg:'#fcf9f2', ink:'#1c1c1c', accent:'#d7c5a8', accent2:'#e9dcc9'},
+      brown:{bg:'#faf7f2', ink:'#1c1c1c', accent:'#b68458', accent2:'#cfb593'}
+    };
+    document.querySelectorAll('[data-theme]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t=themes[btn.dataset.theme];
+        root.style.setProperty('--bg',t.bg);
+        root.style.setProperty('--accent',t.accent);
+        root.style.setProperty('--accent-2',t.accent2);
+      })
+    })
+
+    // опрос (минимал)
+    const key='kz_panels_poll_min';
+    const init={blackout:42,soft:28,mix:26,daylight:4};
+    const votes=JSON.parse(localStorage.getItem(key)||JSON.stringify(init));
+    const ctx=document.getElementById('prefChart');
+    const chart=new Chart(ctx,{
+      type:'doughnut',
+      data:{labels:['Затемнение','Мягкий свет','Комбинация','Дневной свет'], datasets:[{data:[votes.blackout,votes.soft,votes.mix,votes.daylight]}]},
+      options:{plugins:{legend:{position:'bottom'}}, elements:{arc:{borderWidth:0}}}
+    });
+    document.getElementById('voteForm').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const choice=new FormData(e.target).get('mode');
+      votes[choice]=(votes[choice]||0)+1; localStorage.setItem(key,JSON.stringify(votes));
+      chart.data.datasets[0].data=[votes.blackout,votes.soft,votes.mix,votes.daylight]; chart.update();
+    });
+  </script>
+</body>
+</html>

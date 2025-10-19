@@ -28,7 +28,7 @@
     .nav a:hover{opacity:1}
 
     .hero{display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center}
-    .hero .imgwrap{position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--line)}
+    .hero .imgwrap{position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--line); background:#f1ebe4}
     .hero img{width:100%; height:100%; display:block; object-fit:cover}
     .dimmer{position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .25s ease}
     .controls{display:flex; gap:12px; align-items:center; margin-top:18px}
@@ -48,7 +48,6 @@
 
     footer{border-top:1px solid var(--line); padding:36px 0; color:var(--muted); font-size:12px; text-align:center}
 
-    /* минимальные адаптивные правки */
     @media (max-width:900px){.hero{grid-template-columns:1fr;}.controls{flex-wrap:wrap}}
   </style>
 </head>
@@ -61,7 +60,6 @@
         <a href="#idea">Концепт</a>
         <a href="#materials">Материалы</a>
         <a href="#function">Функции</a>
-        <a href="#interactive">Интерактив</a>
         <a href="#poll">Опрос</a>
       </div>
     </div>
@@ -72,22 +70,28 @@
     <div class="hero">
       <div>
         <h1>Панельные шторы в казахском стиле</h1>
-        <p style="margin-top:14px">Тёплая палитра, орнамент «қазақ оюы», сочетание <b>Blackout</b> и <b>Света</b> — спокойный минимализм без лишних деталей.</p>
+        <p style="margin-top:14px">Тёплая палитра, орнамент «қазақ оюы», сочетание <b>Blackout</b> и <b>вуа́ли</b> — спокойный минимализм без лишних деталей.</p>
         <div class="controls">
           <span class="tag">Затемнение</span>
           <input id="lightRange" class="range" type="range" min="0" max="100" value="35" />
           <span class="legend"><span class="dot"></span> имитация blackout</span>
         </div>
-        <div class="controls">
-          <button class="btn" data-theme="sand">Песочный</button>
-          <button class="btn" data-theme="linen">Льняной</button>
-          <button class="btn btn--accent" data-theme="brown">Тёплый коричневый</button>
-        </div>
       </div>
       <figure class="imgwrap">
-        <img src="./assets/Screenshot-2025-10-17-HTML-презентация-по-шторкам.png"
-     alt="Панельные шторы с казахским орнаментом" loading="eager" decoding="async" />
+        <!--
+          КАК ПОДСТАВИТЬ КАРТИНКУ:
+          1) ЛОКАЛЬНО/В РЕПО: положи картинку в assets/ и используй относительный путь ниже
+          2) RAW-ССЫЛКА GITHUB: добавь к URL страницы параметр ?img=https://raw.githubusercontent.com/.../path/image.png
+             (скрипт ниже сам подставит картинку)
+        -->
+        <img id="heroImg" src="assets/kazakh-panels.png" alt="Панельные шторы с казахским орнаментом" onerror="this.style.display='none';document.getElementById('fallback').style.display='grid'">
         <div class="dimmer" id="dimmer"></div>
+        <div id="fallback" style="display:none;place-items:center;position:absolute;inset:0;color:#7a6e63;font-size:14px">
+          <div>
+            <div style="font-weight:600">Нет изображения</div>
+            <div style="opacity:.8;max-width:26ch">Положи файл в <code>assets/kazakh-panels.png</code> или открой страницу с параметром <code>?img=RAW_URL</code>.</div>
+          </div>
+        </div>
       </figure>
     </div>
   </header>
@@ -126,21 +130,14 @@
     </div>
   </section>
 
-  <section class="container" id="interactive">
-    <h2></h2>
-    <p></p>
-  </section>
-
   <div class="container"><div class="divider"></div></div>
 
   <section class="container" id="poll">
-    <h2>3. Мини‑опрос</h2>
+    <h2>2. Мини‑опрос</h2>
     <p>Какой режим вы бы выбрали дома?</p>
     <div class="grid-2" style="align-items:start; margin-top:12px">
-      <div class="card">
-        <canvas id="prefChart" height="220"></canvas>
-      </div>
-      <form id="voteForm" class="card" style="display:grid; grid-template-columns:1fr; gap:10px">
+      <div class="card"><canvas id="prefChart" height="220"></canvas></div>
+      <form id="voteForm" class="card" style="display:grid; gap:10px">
         <label><input type="radio" name="mode" value="blackout" checked> Полное затемнение</label>
         <label><input type="radio" name="mode" value="soft"> Мягкий свет (вуаль)</label>
         <label><input type="radio" name="mode" value="mix"> Комбинация</label>
@@ -151,32 +148,27 @@
     </div>
   </section>
 
-  <footer></footer>
+  <footer>© Школьный проект. Казахский стиль панельных штор — минимализм и орнамент.</footer>
 
   <script>
-    // имитация blackout
+    // 1) Поддержка ?img=RAW_URL для GitHub Raw
+    (function(){
+      const params=new URLSearchParams(location.search);
+      const url=params.get('img');
+      if(url){
+        const img=document.getElementById('heroImg');
+        img.src=url; img.style.display='block';
+        const fb=document.getElementById('fallback'); if(fb) fb.style.display='none';
+      }
+    })();
+
+    // 2) Имитация blackout
     const range=document.getElementById('lightRange');
     const dimmer=document.getElementById('dimmer');
     function upd(){dimmer.style.background=`rgba(0,0,0,${(range.value/100)*0.85})`}
     range.addEventListener('input',upd); upd();
 
-    // смена темы (минимально)
-    const root=document.documentElement;
-    const themes={
-      sand:{bg:'#fbf6ef', ink:'#1c1c1c', accent:'#c8ab86', accent2:'#e0c8a6'},
-      linen:{bg:'#fcf9f2', ink:'#1c1c1c', accent:'#d7c5a8', accent2:'#e9dcc9'},
-      brown:{bg:'#faf7f2', ink:'#1c1c1c', accent:'#b68458', accent2:'#cfb593'}
-    };
-    document.querySelectorAll('[data-theme]').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const t=themes[btn.dataset.theme];
-        root.style.setProperty('--bg',t.bg);
-        root.style.setProperty('--accent',t.accent);
-        root.style.setProperty('--accent-2',t.accent2);
-      })
-    })
-
-    // опрос (минимал)
+    // 3) Опрос (минимал)
     const key='kz_panels_poll_min';
     const init={blackout:42,soft:28,mix:26,daylight:4};
     const votes=JSON.parse(localStorage.getItem(key)||JSON.stringify(init));
